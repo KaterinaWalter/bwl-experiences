@@ -1,31 +1,41 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+:root {
+  --blue-1: #add7f6;
+  --blue-2: #87bfff;
+  --blue-3: #3f8efc;
+  --blue-4: #2667ff;
+  --blue-5: #3b28cc;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  text-align: center;
+  background-color: var(--blue-1);
+}
+
+.App-footer {
+  font-size: 0.75rem;
 }
 
 .App-header {
+  min-height: 20vh;
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-logo {
+  height: 20vmin;
+  pointer-events: none;
 }
 
-.heart {
-  color: #ff0000;
+.App-title {
+  height: 20vmin;
+  font-family: 'Bebas Neue', sans-serif;
 }
 
-.small {
-  font-size: 0.75rem;
+.App-board {
+  background: white;
+  min-height: 30vh;
+  width: 90%;
+  border: 5px solid black;
 }
