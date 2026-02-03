@@ -32,6 +32,11 @@
   font-size: 2rem;
   color: white;
   text-shadow: 2px 2px 0px var(--navy);
+  padding-left: 10px;
+}
+
+.App-description {
+  font-size: 0.7rem;
 }
 
 .Board {
@@ -50,4 +55,8 @@
 
 .ListingDetail {
   background: white;
+}
+
+button {
+  font-size: 0.8rem !important;
 }
