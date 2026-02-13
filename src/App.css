@@ -1,7 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 :root {
-  --navy: #132048;
+  --bwl-navy: #132048;
+  --academic: #9674d5;
+  --arts: #db5375;
+  --science: #4ecdc4;
+  --healthcare: #f15bb5;
+  --environment: #43aa8b;
+  --law: #c08497;
+  --business: #ff9770;
+  --leadership: #00bbf9;
 }
 
 .App {
@@ -13,19 +21,18 @@
   min-height: 10vh;
   font-size: 0.75rem;
   font-weight: bold;
-  color: var(--navy);
+  color: var(--bwl-navy);
 }
 
 .App-header {
   min-height: 20vh;
-  width: 80%;
-  margin: 0 auto;
-  color: var(--navy);
+  width: 90%;
+  color: var(--bwl-navy);
 }
 
 .App-logo {
   height: 50px;
-  padding-top: 10px;
+  padding-top: 5px;
   pointer-events: none;
 }
 
@@ -33,18 +40,24 @@
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 0.2rem;
   padding-top: 10px;
-  line-height: 1.2;
+  line-height: 1;
   font-weight: bold;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: clamp(1rem, -0.875rem + 8.333vw, 3.5rem);
   color: white;
-  text-shadow: 2px 2px 0px var(--navy);
+  text-shadow: 2px 2px 0px var(--bwl-navy);
 }
 
 .App-description {
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin: 0 auto;
-  padding-top: 10px;
+  padding-top: 5px;
+  font-size: clamp(0.5rem, 0.5rem + 1vw, 3vw);
+}
+
+.App-instruction {
+  color: white;
+  font-weight: bold;
 }
 
 .Board {
@@ -73,43 +86,78 @@ button {
 
 /* Interest tag color classes */
 .tag-remote {
-  background-color: #6c757d !important;
+  background-color: var(--remote) !important;
+}
+.tag-remote::before {
+  content: "💻 ";
 }
 
 .tag-academic {
-  background-color: #0d6efd !important;
+  background-color: var(--academic) !important;
+}
+.tag-academic::before {
+  content: "🎓 ";
 }
 
 .tag-arts {
-  background-color: #fd7e14 !important;
+  background-color: var(--arts) !important;
+}
+.tag-arts::before {
+  content: "🎨 ";
 }
 
 .tag-science {
-  background-color: #0dcaf0 !important;
+  background-color: var(--science) !important;
+}
+.tag-science::before {
+  content: "🧬 ";
 }
 
 .tag-healthcare {
-  background-color: #dc3545 !important;
+  background-color: var(--healthcare) !important;
+}
+.tag-healthcare::before {
+  content: "🩺 ";
 }
 
 .tag-environment {
-  background-color: #198754 !important;
+  background-color: var(--environment) !important;
+}
+.tag-environment::before {
+  content: "🌎 ";
 }
 
 .tag-law {
-  background-color: #6f42c1 !important;
+  background-color: var(--law) !important;
+}
+.tag-law::before {
+  content: "⚖️ ";
 }
 
 .tag-business {
-  background-color: #fd6b8b !important;
+  background-color: var(--business) !important;
+}
+.tag-business::before {
+  content: "💼 ";
 }
 
 .tag-leadership {
-  background-color: #20c997 !important;
+  background-color: var(--leadership) !important;
+}
+.tag-leadership::before {
+  content: "🤝 ";
 }
 
 .interest-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.card-title {
+  font-size: 1rem !important;
+}
+
+.card-subtitle {
+  font-size: 0.8rem !important;
 }

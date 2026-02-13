@@ -22,7 +22,8 @@ export default function Board() {
         // Parse CSV data
         const parseCSV = (csv) => {
             const lines = csv.split('\n');
-            const headers = lines[0].split(',');
+            const normalizeValue = (value) => value.trim().replace(/^"|"$/g, '');
+            const headers = lines[0].split(',').map(normalizeValue);
             const data = [];
             
             // Define interest tag columns (starting from index 6)
@@ -40,13 +41,13 @@ export default function Board() {
                     if (char === '"') {
                         inQuotes = !inQuotes;
                     } else if (char === ',' && !inQuotes) {
-                        values.push(current);
+                        values.push(normalizeValue(current));
                         current = '';
                     } else {
                         current += char;
                     }
                 }
-                values.push(current);
+                values.push(normalizeValue(current));
 
                 if (values.length >= 3) {
                     // Extract interest tags where value is TRUE
