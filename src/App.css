@@ -54,6 +54,7 @@
   margin: 0 auto;
   padding-top: 5px;
   font-size: clamp(0.5rem, 0.5rem + 1vw, 3vw);
+  max-width: 85%;
 }
 
 .App-instruction {
