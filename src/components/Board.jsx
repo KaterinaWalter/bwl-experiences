@@ -7,6 +7,10 @@ export default function Board() {
     const [listings, setListings] = useState([]);
     const [selectedListing, setSelectedListing] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedFilterTags, setSelectedFilterTags] = useState([]);
+    const [allTags, setAllTags] = useState([]);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleCardClick = (listing) => {
         setSelectedListing(listing);
@@ -16,6 +20,39 @@ export default function Board() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedListing(null);
+    };
+
+    const handleTagFilterClick = (tag) => {
+        setSelectedFilterTags((prevTags) =>
+            prevTags.includes(tag)
+                ? prevTags.filter((t) => t !== tag)
+                : [...prevTags, tag]
+        );
+    };
+
+    const getFilteredListings = () => {
+        const normalizedQuery = searchQuery.trim().toLowerCase();
+        return listings.filter((listing) => {
+            const matchesTags =
+                selectedFilterTags.length === 0 ||
+                listing.interestTags.some((tag) => selectedFilterTags.includes(tag));
+            if (!matchesTags) {
+                return false;
+            }
+            if (!normalizedQuery) {
+                return true;
+            }
+            const searchHaystack = [
+                listing.title,
+                listing.organization,
+                listing.type,
+                ...(listing.interestTags || [])
+            ]
+                .filter(Boolean)
+                .join(' ')
+                .toLowerCase();
+            return searchHaystack.includes(normalizedQuery);
+        });
     };
 
     useEffect(() => {
@@ -71,13 +108,74 @@ export default function Board() {
 
         const parsedListings = parseCSV(csvData);
         setListings(parsedListings);
+        
+        // Extract unique tags from all listings
+        const uniqueTags = Array.from(
+            new Set(parsedListings.flatMap((listing) => listing.interestTags))
+        ).sort();
+        setAllTags(uniqueTags);
     }, []);
 
     return (
         <>
+            {/* Filter Tags Section */}
+            {allTags.length > 0 && (
+                <div className="filter-tags mb-0 container mt-3 px-3">
+                    <div className="d-flex align-items-center justify-content-start mb-2 gap-2">
+                        <input
+                            className="form-control form-control-sm w-auto"
+                            type="search"
+                            placeholder="🔍 Search listings"
+                            value={searchQuery}
+                            onChange={(event) => setSearchQuery(event.target.value)}
+                            aria-label="Search listings"
+                        />
+                        <div className="d-flex align-items-center">
+                            <button
+                                className="btn btn-sm btn-outline-light"
+                                onClick={() => setIsFilterOpen((prev) => !prev)}
+                            >
+                                {isFilterOpen ? 'Hide' : 'Show'} filters
+                            </button>
+                            {selectedFilterTags.length > 0 && (
+                                <button
+                                    className="btn btn-sm btn-link"
+                                    onClick={() => setSelectedFilterTags([])}
+                                >
+                                    Clear filters
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                    {isFilterOpen && (
+                        <>
+                            <div className="d-flex flex-wrap gap-2">
+                                {allTags.map((tag) => {
+                                    const tagClass = `tag-${tag.split(' ')[0].toLowerCase()}`;
+                                    return (
+                                        <span
+                                            key={tag}
+                                            className={`badge ${tagClass}`}
+                                            onClick={() => handleTagFilterClick(tag)}
+                                            style={{
+                                                cursor: 'pointer',
+                                                opacity: selectedFilterTags.includes(tag) ? 1 : 0.6,
+                                                border: selectedFilterTags.includes(tag) ? '2px solid' : '1px solid transparent'
+                                            }}
+                                        >
+                                            {tag}
+                                        </span>
+                                    );
+                                })}
+                            </div>
+                        </>
+                    )}
+                </div>
+            )}
+
             <div className="Board container mt-3 mb-3">
                 <div className="row">
-                    {listings.map((listing, index) => (
+                    {getFilteredListings().map((listing, index) => (
                         <div key={index} className="col-md-6 col-lg-4">
                             <ListingCard 
                                 title={listing.title}
